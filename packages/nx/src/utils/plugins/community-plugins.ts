@@ -43,8 +43,8 @@ export function listCommunityPlugins(
 
   output.log({
     title: `Community plugins:`,
-    bodyLines: availableCommunityPlugins.map((p) => {
-      return `${chalk.bold(p.name)} - ${p.description}`;
-    }),
+    bodyLines: availableCommunityPlugins.map(
+      (p) => `${chalk.bold(p.name)} - ${p.description}`
+    ),
   });
 }

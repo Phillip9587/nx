@@ -1,4 +1,3 @@
-import { workspaceRoot } from '../workspace-root';
 import * as chalk from 'chalk';
 import { dirname, join } from 'path';
 import { output } from '../output';
@@ -26,36 +25,22 @@ function tryGetCollection<T extends object>(
 }
 
 export function getPluginCapabilities(
-  workspaceRoot: string,
   pluginName: string
 ): PluginCapabilities | null {
   try {
-    const { json: packageJson, path: packageJsonPath } =
-      readPluginPackageJson(pluginName);
+    const { json: packageJson, path } = readPluginPackageJson(pluginName);
     return {
       name: pluginName,
       generators:
-        tryGetCollection(
-          packageJsonPath,
-          packageJson.generators,
-          'generators'
-        ) ||
-        tryGetCollection(
-          packageJsonPath,
-          packageJson.schematics,
-          'generators'
-        ) ||
-        tryGetCollection(
-          packageJsonPath,
-          packageJson.schematics,
-          'generators'
-        ) ||
-        tryGetCollection(packageJsonPath, packageJson.schematics, 'schematics'),
+        tryGetCollection(path, packageJson.generators, 'generators') ||
+        tryGetCollection(path, packageJson.generators, 'schematics') ||
+        tryGetCollection(path, packageJson.schematics, 'generators') ||
+        tryGetCollection(path, packageJson.schematics, 'schematics'),
       executors:
-        tryGetCollection(packageJsonPath, packageJson.executors, 'executors') ||
-        tryGetCollection(packageJsonPath, packageJson.executors, 'builders') ||
-        tryGetCollection(packageJsonPath, packageJson.builders, 'executors') ||
-        tryGetCollection(packageJsonPath, packageJson.builders, 'builders'),
+        tryGetCollection(path, packageJson.executors, 'executors') ||
+        tryGetCollection(path, packageJson.executors, 'builders') ||
+        tryGetCollection(path, packageJson.builders, 'executors') ||
+        tryGetCollection(path, packageJson.builders, 'builders'),
     };
   } catch {
     return null;
@@ -63,7 +48,7 @@ export function getPluginCapabilities(
 }
 
 export function listPluginCapabilities(pluginName: string) {
-  const plugin = getPluginCapabilities(workspaceRoot, pluginName);
+  const plugin = getPluginCapabilities(pluginName);
 
   if (!plugin) {
     const pmc = getPackageManagerCommand();

@@ -77,6 +77,10 @@ export function fetchCorePlugins(): CorePlugin[] {
       capabilities: 'executors,generators',
     },
     {
+      name: '@nrwl/vite',
+      capabilities: 'executors,generators',
+    },
+    {
       name: '@nrwl/web',
       capabilities: 'executors,generators',
     },
@@ -102,9 +106,9 @@ export function listCorePlugins(
   if (alsoAvailable.length) {
     output.log({
       title: `Also available:`,
-      bodyLines: alsoAvailable.map((p) => {
-        return `${chalk.bold(p.name)} (${p.capabilities})`;
-      }),
+      bodyLines: alsoAvailable.map(
+        (p) => `${chalk.bold(p.name)} (${p.capabilities})`
+      ),
     });
   }
 }

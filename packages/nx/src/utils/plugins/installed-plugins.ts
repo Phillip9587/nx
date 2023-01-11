@@ -35,7 +35,7 @@ export function getInstalledPluginsFromPackageJson(
       .sort()
       .map<[string, PluginCapabilities]>((name) => [
         name,
-        getPluginCapabilities(workspaceRoot, name),
+        getPluginCapabilities(name),
       ])
       .filter(([, x]) => x && !!(x.generators || x.executors))
   );

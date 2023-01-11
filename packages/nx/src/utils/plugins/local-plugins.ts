@@ -43,7 +43,9 @@ export function getLocalWorkspacePlugins(
     }
   }
 
-  return plugins;
+  return new Map(
+    Array.from(plugins).sort(([key1], [key2]) => key1.localeCompare(key2))
+  );
 }
 
 export function listLocalWorkspacePlugins(
